@@ -10,7 +10,7 @@ Click the preview to watch the full MP4 demo.
 
 ## Download and Install
 
-End users should download a DMG from the repository's **Releases** page when one is published. The Git repository contains the app source, not the generated `dist` bundle. The bundle is large and is intentionally excluded from Git.
+End users should download the latest DMG from the repository's [Releases page](https://github.com/navaneeth-algorithm/MagicEraser/releases). The current release is [v1.0.0](https://github.com/navaneeth-algorithm/MagicEraser/releases/tag/v1.0.0). The Git repository contains the app source, not the generated `dist` bundle. The bundle is large and is intentionally excluded from Git.
 
 Repository:
 
