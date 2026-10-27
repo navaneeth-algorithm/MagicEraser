@@ -8,13 +8,19 @@ A local desktop photo cleanup app powered by Lama Cleaner. The app runs in an El
 
 Click the preview to watch the full MP4 demo.
 
-## Run the App
+## Download and Install
+
+The Git repository contains the app source, not the generated `dist` bundle. The bundle is large and is intentionally excluded from Git. For a distributable app, build a DMG using the packaging steps below or publish the DMG as a GitHub Release asset.
+
+## Run the App Locally
 
 Open the packaged app:
 
 ```bash
 open "dist/mac-arm64/Magic Eraser.app"
 ```
+
+To install it manually after building, open the `dist/mac-arm64` folder and drag `Magic Eraser.app` into the Mac `Applications` folder. Since local builds are unsigned, macOS may require Control-clicking the app and choosing **Open** the first time.
 
 On the first launch, choose the folder containing the model cache. The app remembers this location for future launches.
 
@@ -37,30 +43,38 @@ The setup screen also accepts direct `.pt` and `.pth` URLs. Downloaded files are
 
 ## Build the App
 
-The packaged app is already built under `dist`. To rebuild the embedded Python runtime after changing dependencies:
+From a fresh clone, install the JavaScript build dependencies:
+
+```bash
+npm install
+```
+
+The embedded Python runtime is built from the local `venv`. To rebuild it after changing dependencies:
 
 ```bash
 source venv/bin/activate
 ./build_runtime.sh
 ```
 
-Then rebuild the Electron app without macOS signing for local testing:
+Build an unpacked app for local testing:
 
 ```bash
 CSC_IDENTITY_AUTO_DISCOVERY=false npm run build
 ```
 
-Run both commands from the project root. If dependencies are missing, install them first:
+The app is created at:
 
 ```bash
-npm install
-```
-
-The rebuilt app is created at:
-
-```text
 dist/mac-arm64/Magic Eraser.app
 ```
+
+Build a distributable DMG with:
+
+```bash
+CSC_IDENTITY_AUTO_DISCOVERY=false npm run package
+```
+
+The DMG is created under `dist`. A signed and notarized release requires an Apple Developer certificate and notarization credentials.
 
 ## Runtime Layout
 

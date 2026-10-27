@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --mac --dir"
+    "build": "electron-builder --mac --dir",
+    "package": "electron-builder --mac"
   },
   "devDependencies": {
     "electron": "^38.2.0",
