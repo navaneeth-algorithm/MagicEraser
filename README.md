@@ -4,7 +4,9 @@ A local desktop photo cleanup app powered by Lama Cleaner. The app runs in an El
 
 ## Demo
 
-[![Magic Eraser demo](magiceraser.gif)](magicerasser.mp4)
+<video controls width="720" src="https://github.com/navaneeth-algorithm/MagicEraser/releases/download/v1.0.0/magicerasser.mp4"></video>
+
+[![Magic Eraser demo](magiceraser.gif)](https://github.com/navaneeth-algorithm/MagicEraser/releases/download/v1.0.0/magicerasser.mp4)
 
 Click the preview to watch the full MP4 demo.
 
@@ -98,6 +100,36 @@ The app opens a native Electron window and starts its local Lama Cleaner backend
 3. Click **Open Magic Eraser**.
 
 The selected model path is saved for future launches. The frontend is served by the bundled Lama Cleaner runtime and displayed inside the Electron window; Safari and Chrome are not required.
+
+## Models and Capabilities
+
+Magic Eraser is a focused desktop wrapper around the Lama Cleaner inpainting workflow. It currently enables:
+
+- **LaMa inpainting** for removing unwanted objects, people, marks, and defects
+- **Interactive segmentation** for selecting an object with clicks before removing it
+- **CPU inference** with interactive segmentation configured for Apple Silicon MPS
+- **Local processing** without uploading images to a remote service
+
+### Required Models
+
+| File | Purpose |
+| --- | --- |
+| `big-lama.pt` | Main LaMa image inpainting model |
+| `sam_vit_l_0b3195.pth` | Segment Anything interactive selection model |
+
+Both files must be inside:
+
+```text
+<model-folder>/torch/hub/checkpoints/
+```
+
+The setup screen can download direct `.pt` and `.pth` URLs into this structure. The selected folder is saved locally and reused on later launches.
+
+This app does not currently expose every model and plugin available in the wider IOPaint/Lama Cleaner ecosystem, such as Stable Diffusion replacement, outpainting, RealESRGAN, GFPGAN, RestoreFormer, anime segmentation, or background removal. Those projects are useful references for future features:
+
+- [IOPaint models](https://www.iopaint.com/models)
+- [IOPaint plugins](https://www.iopaint.com/plugins)
+- [Lama Cleaner documentation](https://lama-cleaner.github.io/)
 
 ## Runtime Layout
 
