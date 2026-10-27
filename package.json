@@ -1,0 +1,37 @@
+{
+  "name": "magic-eraser-desktop",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for the local Magic Eraser UI",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac --dir"
+  },
+  "devDependencies": {
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "local.magiceraser.app",
+    "productName": "Magic Eraser",
+    "files": [
+      "main.js",
+      "preload.js",
+      "setup.html",
+      "server_entry.py",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "runtime-dist/MagicEraserRuntime",
+        "to": "MagicEraserRuntime"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.photo-video",
+      "identity": null,
+      "target": "dmg"
+    }
+  }
+}

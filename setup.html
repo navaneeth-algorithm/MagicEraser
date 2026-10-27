@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magic Eraser Setup</title>
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #f3f1ec; color: #242321; }
+    main { width: min(680px, calc(100vw - 48px)); padding: 48px; background: #fffdf8; border: 1px solid #d8d1c5; box-shadow: 0 24px 70px #443b2d1c; }
+    h1 { margin: 0 0 10px; font: 600 38px Georgia, serif; letter-spacing: 0; }
+    p { color: #665f55; line-height: 1.55; }
+    .path { padding: 13px 15px; background: #eeebe4; color: #514a41; overflow-wrap: anywhere; min-height: 20px; }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; margin: 24px 0; }
+    button { border: 0; padding: 12px 18px; font: inherit; cursor: pointer; background: #202b27; color: white; }
+    button.secondary { background: #ded8ce; color: #292621; }
+    input { box-sizing: border-box; width: 100%; padding: 13px; border: 1px solid #c9c0b3; font: inherit; }
+    .download { display: grid; grid-template-columns: 1fr auto; gap: 10px; margin-top: 12px; }
+    .status { margin-top: 22px; padding: 16px; border-left: 4px solid #c9c0b3; }
+    .ready { border-color: #3a765b; background: #edf6ef; }
+    .error { color: #9c3d2c; }
+    small { color: #756d62; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Set up Magic Eraser</h1>
+    <p>Keep the large AI models outside the app. Choose a folder that contains the models, or download each model directly into a folder you select.</p>
+    <button id="choose" class="secondary">Choose model folder</button>
+    <p class="path" id="folder">No model folder selected</p>
+    <small>Expected location inside that folder: <b>torch/hub/checkpoints/</b></small>
+    <div class="download">
+      <input id="url" placeholder="Paste a direct .pt or .pth model URL">
+      <button id="download">Download model</button>
+    </div>
+    <div class="status" id="status">Required files: checking...</div>
+    <div class="actions">
+      <button id="launch" disabled>Open Magic Eraser</button>
+    </div>
+  </main>
+  <script>
+    const folder = document.querySelector('#folder');
+    const status = document.querySelector('#status');
+    const launch = document.querySelector('#launch');
+    function render(data) {
+      folder.textContent = data.folder || 'No model folder selected';
+      status.className = data.ready ? 'status ready' : 'status';
+      status.textContent = `LaMa: ${data.lama ? 'found' : 'missing'} | Interactive segmentation: ${data.interactiveSeg ? 'found' : 'missing'}`;
+      launch.disabled = !data.ready;
+    }
+    async function refresh() { render(await window.magicEraser.getModelStatus()); }
+    document.querySelector('#choose').onclick = async () => render(await window.magicEraser.chooseModelFolder());
+    document.querySelector('#download').onclick = async () => {
+      const input = document.querySelector('#url');
+      if (!input.value.trim()) return;
+      status.className = 'status'; status.textContent = 'Downloading model...';
+      try { render(await window.magicEraser.downloadModel(input.value.trim())); input.value = ''; }
+      catch (error) { status.className = 'status error'; status.textContent = error.message; }
+    };
+    launch.onclick = async () => { launch.disabled = true; status.textContent = 'Starting Magic Eraser...'; try { await window.magicEraser.launchEditor(); } catch (error) { status.className = 'status error'; status.textContent = error.message; launch.disabled = false; } };
+    refresh();
+  </script>
+</body>
+</html>
