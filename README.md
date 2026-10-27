@@ -4,12 +4,9 @@ A local desktop photo cleanup app powered by Lama Cleaner. The app runs in an El
 
 ## Demo
 
-![Magic Eraser demo](magiceraser.gif)
+[![Magic Eraser demo](magiceraser.gif)](magicerasser.mp4)
 
-<video controls width="720">
-	<source src="https://github.com/navaneeth-algorithm/MagicEraser/raw/refs/heads/main/magicerasser.mp4" type="video/mp4">
-	Your browser does not support embedded video. [Watch the MP4 demo](magicerasser.mp4).
-</video>
+Click the preview to watch the full MP4 demo.
 
 ## Run the App
 
